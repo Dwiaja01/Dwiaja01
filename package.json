@@ -1,0 +1,19 @@
+{
+  "name": "meme-coin-art-monitor",
+  "version": "1.0.0",
+  "description": "Aplikasi dashboard monitoring coin meme dengan visual lukisan/canvas dan alert sederhana.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check public/app.js"
+  },
+  "keywords": [
+    "meme-coin",
+    "crypto",
+    "monitoring",
+    "dashboard",
+    "art"
+  ],
+  "author": "",
+  "license": "MIT"
+}

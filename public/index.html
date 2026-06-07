@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meme Coin Art Monitor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="hero">
+      <nav class="topbar">
+        <a class="brand" href="#top" aria-label="Meme Coin Art Monitor">
+          <span class="brand-mark">◉</span>
+          <span>Meme Coin Art Monitor</span>
+        </a>
+        <div class="status-pill" id="connectionStatus">Menunggu data…</div>
+      </nav>
+
+      <section class="hero-grid" id="top">
+        <div>
+          <p class="eyebrow">Dashboard crypto + kanvas lukisan digital</p>
+          <h1>Pantau coin meme seperti melihat warna pasar di atas kanvas.</h1>
+          <p class="hero-copy">
+            Aplikasi ini mengambil data CoinGecko, menampilkan harga, market cap, volume,
+            perubahan 1 jam/24 jam/7 hari, watchlist, alert harga, dan visualisasi artistik
+            yang berubah mengikuti pergerakan pasar.
+          </p>
+          <div class="hero-actions">
+            <button class="primary" id="refreshButton">Refresh sekarang</button>
+            <a class="secondary" href="#dashboard">Lihat dashboard</a>
+          </div>
+        </div>
+        <aside class="canvas-card" aria-label="Visualisasi lukisan pasar">
+          <canvas id="marketCanvas" width="640" height="420"></canvas>
+          <div class="canvas-caption">
+            <strong>Market Canvas</strong>
+            <span>Hijau = naik, merah = turun, ukuran sapuan = market cap.</span>
+          </div>
+        </aside>
+      </section>
+    </header>
+
+    <main id="dashboard" class="dashboard">
+      <section class="controls panel">
+        <div class="control-group">
+          <label for="coinIds">Coin IDs</label>
+          <textarea id="coinIds" rows="3" spellcheck="false"></textarea>
+          <small>Gunakan ID CoinGecko, pisahkan dengan koma. Contoh: dogecoin, shiba-inu, pepe.</small>
+        </div>
+        <div class="control-row">
+          <div class="control-group">
+            <label for="searchInput">Cari coin</label>
+            <input id="searchInput" type="search" placeholder="misal: dog, pepe, cat" />
+            <div class="search-results" id="searchResults"></div>
+          </div>
+          <div class="control-group compact">
+            <label for="refreshInterval">Auto refresh</label>
+            <select id="refreshInterval">
+              <option value="0">Mati</option>
+              <option value="30">30 detik</option>
+              <option value="60" selected>60 detik</option>
+              <option value="300">5 menit</option>
+            </select>
+          </div>
+          <div class="control-group compact">
+            <label for="sortSelect">Urutkan</label>
+            <select id="sortSelect">
+              <option value="market_cap_desc">Market cap</option>
+              <option value="volume_desc">Volume</option>
+              <option value="price_change_percentage_24h_desc">Naik 24j</option>
+              <option value="price_change_percentage_24h_asc">Turun 24j</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics-grid" aria-live="polite">
+        <article class="metric panel">
+          <span>Total market cap</span>
+          <strong id="totalMarketCap">-</strong>
+        </article>
+        <article class="metric panel">
+          <span>Total volume 24j</span>
+          <strong id="totalVolume">-</strong>
+        </article>
+        <article class="metric panel">
+          <span>Coin naik 24j</span>
+          <strong id="gainersCount">-</strong>
+        </article>
+        <article class="metric panel">
+          <span>Terakhir refresh</span>
+          <strong id="lastRefresh">-</strong>
+        </article>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Radar pasar</p>
+            <h2>Daftar meme coin</h2>
+          </div>
+          <p class="hint">Klik ⭐ untuk watchlist. Atur alert harga di kolom alert.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Watch</th>
+                <th>Coin</th>
+                <th>Harga</th>
+                <th>1j</th>
+                <th>24j</th>
+                <th>7h</th>
+                <th>Market cap</th>
+                <th>Volume</th>
+                <th>Alert harga</th>
+              </tr>
+            </thead>
+            <tbody id="coinTableBody">
+              <tr><td colspan="9" class="empty">Memuat data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel alerts-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Sinyal lokal</p>
+            <h2>Notifikasi & catatan</h2>
+          </div>
+          <button class="ghost" id="clearAlerts">Bersihkan</button>
+        </div>
+        <ul id="alertLog" class="alert-log">
+          <li>Belum ada alert. Data yang tampil bukan saran finansial.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Data pasar dari CoinGecko melalui endpoint lokal <code>/api/coins</code>.
+        Gunakan aplikasi ini sebagai alat monitoring, bukan rekomendasi beli/jual.
+      </p>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
